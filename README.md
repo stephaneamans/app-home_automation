@@ -15,6 +15,6 @@ users to interact with it through terminals (smartphone based, iOS or Android).
 
 ![System global diagram overview](system_global_diagram_overview.drawio.svg)
 
-Read more about the Rapberry pi motherboard [here](./01_raspberry_pi_motherboard/01_documentation/raspberry_pi_motherboard.md)
+[Rapberry pi motherboard documentation](./01-raspberry_pi_motherboard/01-documentation/raspberry_pi_motherboard.md)
 
-Read more about the satellite module [here](./02_module_satellite/01_documentation/module.md)
+[Satellite module documentation](./02-module_satellite/01-documentation/module.md)
