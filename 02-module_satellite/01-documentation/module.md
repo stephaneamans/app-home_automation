@@ -23,11 +23,16 @@ The power module is used to supply needed voltage domain (3.3V), the power consu
 
 ## 2.2 - Hardware architecture
 
-The hardware architecture is shown in the figure 2.2, declination of the module principle described in the section one
+### Main module
+
+The hardware architecture is shown in the figure 2.2, declination of the module principle described in the section one.
+
+The module is composed of two boards. The module board with the RF tranceiver, the MCU, some input interfaces the power supply and so on as shown in the figure below.
+The extension board provide additional optional functionalities like, relay contact, light sensor, humidity sensor and so on.
 
 ![Module global diagram overview](module_hardware_architecture.drawio.svg)
 
-### NRF24L01 RF tranceiver function
+#### NRF24L01 RF tranceiver function
 
 This RF tranceiver is a 2.4 GHz multichannel transmit and receive module.
 It can be found as a SOM (system on module) with an external antenna or a PCB printed antenna.
@@ -49,7 +54,7 @@ NRF24L01_CE : chip enable, function input
 NRF24L01_IRQ : interrupt line, function output
 
 
-### Clock function
+#### Clock function
 
 This optional clock source can be used to enhance the precision of the RTC and microcontroller accuracy.
 
@@ -57,7 +62,7 @@ This optional clock source can be used to enhance the precision of the RTC and m
 
 Clock : clock source for MCU and RTC
 
-### SWD serial wire debug function
+#### SWD serial wire debug function
 
 This serial wire debug connector is a 4 wires connector.
 
@@ -73,7 +78,7 @@ VCC  : +3.3V MCU, power line
 
 GND : Ground, power line
 
-### Extensions
+#### Extensions
 
 This termination is a 6 wires port used to extend the module to welcome an optional daughter board.
 
@@ -81,19 +86,19 @@ This optional custom board can enhance the module functionalities.
 
 **Interfaces**:
 
-EXT_GPIO1 : general purpose IO, bidirectional
-
-EXT_GPIO2 : general purpose IO, bidirectional
+EXT_GPIO : general purpose IO, bidirectional
 
 EXT_I2C_SDA : I2C data line, bidirectional
 
 EXT_I2C_SCL : I2C clock line module output, function input
 
-VCC  : +3.3V MCU, power line
+VCC_3.3V  : +3.3V MCU, power line
+
+VCC_12V  : +12V MCU, power line
 
 GND : Ground, power line
 
-### Runtime debug
+#### Runtime debug
 
 This is a 5 wires connector used to perform runtime debug actions.
 
@@ -115,7 +120,7 @@ DBG_GPIO1 : general purpose IO, bidirectional
 
 DBG_GPIO2 : general purpose IO, bidirectional
 
-### Digital input
+#### Digital input
 
 This function shall convert any external binary signal to a safe 3.3V / 0V signal usable by the MCU to detect an external peripheral ON / OFF state.
 
@@ -129,7 +134,7 @@ DIG_IN3 : module general purpose input, function output
 
 DIG_IN4 : module general purpose input, function output
 
-### Analog input
+#### Analog input
 
 This function shall be used to convert any external analog input voltages to a safe ADC range signal usable by the MCU.
 This can reflect any analog peripheral like humidity, temperature, light sensor or monitor input battery level.
@@ -144,7 +149,7 @@ ADC3 : module analog input, function output
 
 ADC4 : module analog input, function output
 
-### Digital output
+#### Digital output
 
 This function shall deliver safely 3.3V ON / OFF voltages.
 
@@ -154,30 +159,19 @@ DIG_OUT1 : module general purpose output, function input
 
 DIG_OUT2 : module general purpose output, function input
 
-### Switching output
-
-This function shall provide a contact normaly open or normaly closed based around relays.
-A mecanism shall be developped to switch on and off the relays regarding the function input state.
-
-**Interfaces**:
-
-RLY1 : relay command, function input
-
-RLY2 : relay command, function input
-
-RLY3 : relay command, function input
-
-RLY4 : relay command, function input
-
-### Power supply
+#### Power supply
 
 This function shaal convert a module input voltage to a safe and regulated voltage domain to power all components on the board.
 
 **Interfaces**:
 
-+3.3V : power supply
++12V : main external power supply
 
-### Microcontroller
++5V : optional communication power supply
+
++3.3V : digital power supply
+
+#### Microcontroller
 
 The microcontroller shall centralize and drive all peripherals.
 
@@ -212,11 +206,63 @@ The microcontroller shall centralize and drive all peripherals.
 | ADC4         | analog input                 | MCU input  |
 | DIG_OUT1     | general purpose output       | MCU output |
 | DIG_OUT2     | general purpose output       | MCU output |
-| RLY1         | relay command                | MCU output |
-| RLY2         | relay command                | MCU output |
-| RLY3         | relay command                | MCU output |
-| RLY4         | relay command                | MCU output |
+
+### Extension board
+
+This function is used to extend the main module board functionalities.
+
+#### Extensions
+
+This is the communication interface between the two boards. Termination is a 6 wires port used to extend the module.
+
+This optional custom board can enhance the module functionalities.
+
+**Interfaces**:
+
+EXT_GPIO : general purpose IO, bidirectional
+
+EXT_I2C_SDA : I2C data line, bidirectional
+
+EXT_I2C_SCL : I2C clock line module input, function input
+
+VCC_3.3V  : +3.3V MCU, power line
+
+VCC_12V  : +12V MCU, power line
+
+GND : Ground, power line
 
 
+#### Switching output
 
+As an example, this function shall provide a contact normaly open or normaly closed based around relays.
+A mecanism shall be developped to switch on and off the relays regarding the function input state.
 
+This kind of function can take the shape of a light sensor and so on...
+
+**Interfaces**:
+
+RLY1 : relay command, function input
+
+RLY2 : relay command, function input
+
+RLY3 : relay command, function input
+
+RLY4 : relay command, function input
+
+### Module versus Extension boards interface
+
+This termination is a 6 wires interface used to ensure the communication and power supply between the module and its optional daughter board.
+
+**Interfaces**:
+
+EXT_GPIO : general purpose IO, bidirectional
+
+EXT_I2C_SDA : I2C data line, bidirectional
+
+EXT_I2C_SCL : I2C clock line module output, function input
+
+VCC_3.3V  : +3.3V MCU, power line
+
+VCC_12V  : +12V MCU, power line
+
+GND : Ground, power line
