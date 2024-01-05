@@ -39,7 +39,7 @@ It can be found as a SOM (system on module) with an external antenna or a PCB pr
 
 It is powered  wit a +3.3V power supply, and uses an SPI interface to communicate with master.
 
-**Interfaces**:
+**Interfaces :**
 
 SPI_SCK  : SPI clock, function input
 
@@ -58,7 +58,7 @@ NRF24L01_IRQ : interrupt line, function output
 
 This optional clock source can be used to enhance the precision of the RTC and microcontroller accuracy.
 
-**Interfaces**:
+**Interfaces :**
 
 Clock : clock source for MCU and RTC
 
@@ -68,7 +68,7 @@ This serial wire debug connector is a 4 wires connector.
 
 It is used to plug a serial wire debug probe to perform microcontroller flash programming and provides numbers of debug features
 
-**Interfaces**:
+**Interfaces :**
 
 SWD_CLK : module input serial wire debug clock : function ouput
 
@@ -84,7 +84,7 @@ This termination is a 6 wires port used to extend the module to welcome an optio
 
 This optional custom board can enhance the module functionalities.
 
-**Interfaces**:
+**Interfaces :**
 
 EXT_GPIO : general purpose IO, bidirectional
 
@@ -108,7 +108,7 @@ It can be separated into two different functionalities:
 
  - GPIOs are used to triggers and/or output states to an external analyser (oscilloscope, digital annalyser).
 
-**Interfaces**:
+**Interfaces :**
 
 DBG_TX : UART data out, module input
 
@@ -124,7 +124,7 @@ DBG_GPIO2 : general purpose IO, bidirectional
 
 This function shall convert any external binary signal to a safe 3.3V / 0V signal usable by the MCU to detect an external peripheral ON / OFF state.
 
-**Interfaces**:
+**Interfaces :**
 
 DIG_IN1 : module general purpose input, function output
 
@@ -139,7 +139,7 @@ DIG_IN4 : module general purpose input, function output
 This function shall be used to convert any external analog input voltages to a safe ADC range signal usable by the MCU.
 This can reflect any analog peripheral like humidity, temperature, light sensor or monitor input battery level.
 
-**Interfaces**:
+**Interfaces :**
 
 ADC1 : module analog input, function output
 
@@ -153,7 +153,7 @@ ADC4 : module analog input, function output
 
 This function shall deliver safely 3.3V ON / OFF voltages.
 
-**Interfaces**:
+**Interfaces :**
 
 DIG_OUT1 : module general purpose output, function input
 
@@ -163,7 +163,7 @@ DIG_OUT2 : module general purpose output, function input
 
 This function shaal convert a module input voltage to a safe and regulated voltage domain to power all components on the board.
 
-**Interfaces**:
+**Interfaces :**
 
 +12V : main external power supply
 
@@ -175,7 +175,7 @@ This function shaal convert a module input voltage to a safe and regulated volta
 
 The microcontroller shall centralize and drive all peripherals.
 
-**Interfaces**:
+**Interfaces :**
 
 | Signal name  | Signal description           | Direction  |
 |--------------|------------------------------|------------|
@@ -217,7 +217,7 @@ This is the communication interface between the two boards. Termination is a 6 w
 
 This optional custom board can enhance the module functionalities.
 
-**Interfaces**:
+**Interfaces :**
 
 EXT_GPIO : general purpose IO, bidirectional
 
@@ -239,7 +239,7 @@ A mecanism shall be developped to switch on and off the relays regarding the fun
 
 This kind of function can take the shape of a light sensor and so on...
 
-**Interfaces**:
+**Interfaces :**
 
 RLY1 : relay command, function input
 
@@ -253,7 +253,7 @@ RLY4 : relay command, function input
 
 This termination is a 6 wires interface used to ensure the communication and power supply between the module and its optional daughter board.
 
-**Interfaces**:
+**Interfaces :**
 
 EXT_GPIO : general purpose IO, bidirectional
 
@@ -266,3 +266,16 @@ VCC_3.3V  : +3.3V MCU, power line
 VCC_12V  : +12V MCU, power line
 
 GND : Ground, power line
+
+**Connector pinout :**
+
+| Pin number | Signal name  | Signal description                  |
+|------------|--------------|-------------------------------------|
+|     1      | +12V power   | +12V power supply                   |
+|     2      | +3.3V power  | +3.3V power supply                  |
+|     3      | EXT_IO_AN0   | External digital IO or analog input |
+|     4      | I2C_SCL      | I2C bus clock line                  |
+|     5      | I2C_SDA      | I2C bus data line                   |
+|     6      | GND          | Power ground                        |
+
+
