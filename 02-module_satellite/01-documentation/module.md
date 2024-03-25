@@ -180,6 +180,27 @@ The switch shall be controlled through an MCU output.
 | LIGHT_SENSOR_EN | digital output        |
 
 
+#### Temperature and humidity sensor submodule
+
+This function shall be used to measure environmental temperature and humidity values.
+It is based on an I2C sensor providing values after internal processing.
+
+The sensor will be powered with the MCU voltage (+3.3V).
+A reset pin shall be used to reinitialize the sensor in case of unrecoverable error.
+The ADD pin is used to tweek the I2C address on the bus in case of conflict with another peripheral (mostly with a peripheral on the extension board).
+
+Interfaces :
+
+| Signal name  | Signal description     |
+|--------------|------------------------|
+| I2C_SDA      | I2C data line          |
+| I2C_SCL      | I2C clock line         |
+| \RST         | general purpose output |
+| ADDR         | general purpose output |
+| +3.3V        | +3.3V MCU, power line  |
+|  GND         | ground, power line     |
+
+
 #### Power supply submodule
 
 This function shall convert a module input voltage to a safe and regulated voltage domain to power all components on the board.
@@ -209,56 +230,56 @@ The microcontroller shall centralize and drive all peripherals.
 
 Interfaces :
 
-| Pin | Signal name     | Pin configuration             | Signal description                | Pin affectation  |
-|-----|-----------------|-------------------------------|-----------------------------------|------------------|
-|  1  | NC              | General purpose input         | Not connected                     | PC13             |
-|  2  | RTC_CLK_IN      | Clock source input            | Clock source for RTC              | PC14 / OSC32_IN  |
-|  3  | RTC_CLK_OUT     | Clock source output           | Clock source for RTC              | PC15 / OSC32_OUT |
-|  4  | 3.3V_POWER      |                               | MCU main power                    | VBAT             |
-|  5  | 3.3V_POWER      |                               | MCU main power                    | VREF+            |
-|  6  | 3.3V_POWER      |                               | MCU main power                    | VDD/VDDA         |
-|  7  | GND             |                               | MCU ground path                   | VSS/VSSA         |
-|  8  | NRF24L01_CE     | General purpose output        | NRF24L01 chip enable              | PF0              |
-|  9  | NRF24L01_IRQ    | General purpose input         | NRF24L01 interrupt line           | PF1              |
-|  10 | \RST            | Reset                         | MCU reset                         | NRST             |
-|  11 | EXT_INPUT1      | General purpose input         | Module external input             | PA0              |
-|  12 | EXT_INPUT2      | General purpose input         | Module external input             | PA1              |
-|  13 | EXT_INPUT3      | General purpose input         | Module external input             | PA2              |
-|  14 | EXT_INPUT4      | General purpose input         | Module external input             | PA3              |
-|  15 | DRIVE_CMD1_EN   | General purpose output        | External input drive enable       | PA4              |
-|  16 | DRIVE_CMD2_EN   | General purpose output        | External input drive enable       | PA5              |
-|  17 | DRIVE_CMD3_EN   | General purpose output        | External input drive enable       | PA6              |
-|  18 | DRIVE_CMD4_EN   | General purpose output        | External input drive enable       | PA7              |
-|  19 | HW_VERSION0     | General purpose input         | Hardware version (0 or 1)         | PB0              |
-|  20 | HW_VERSION1     | General purpose input         | Hardware version (0 or 1)         | PB1              |
-|  21 | HW_VERSION2     | General purpose input         | Hardware version (0 or 1)         | PB2              |
-|  22 | AD_12V          | Analog input                  | Monitor 12V power supply          | PB10 / ADC_IN11  |
-|  23 | LIGHT_SENSOR_EN | General purpose output        | Ligth sensor enable               | PB11             |
-|  24 | AD_LIGHT        | Analog input                  | Monitor light sensor              | PB12 / ADC_IN16  |
-|  25 | SPI_SCK         | SPI2 master output            | SPI master clock                  | PB13 / SPI2_SCK  |
-|  26 | SPI_MISO        | SPI2 master input             | SPI master data in                | PB14 / SPI2_MISO |
-|  27 | SPI_MOSI        | SPI2 master output            | SPI master data out               | PB15 / SPI2_MOSI |
-|  28 | NRF24L01_CS     | SPI2 master output            | SPI master chip select            | PA8              |
-|  29 | 5V_EN           | General purpose output        | Enable communication power supply | PA9              |
-|  30 | \MAX487_RE      | General purpose output        | Enable RS-485 driver reception    | PC6              |
-|  31 | MAX487_DE       | General purpose output        | Enable RS-485 driver transmission | PC7              |
-|  32 | NC              | General purpose input         | Not connected                     | PA10             |
-|  33 | NC              | General purpose input         | Not connected                     | PA11             |
-|  34 | NC              | General purpose input         | Not connected                     | PA12             |
-|  35 | SWD_IO          | debug SWD bidirectional       | Serial wire debug data            | PA13 / SWDIO     |
-|  36 | SWD_CLK         | debug SWD input               | Serial wire debug clock           | PA14 / SWCLK     |
-|  37 | NC              | General purpose input         | Not connected                     | PA15             |
-|  38 | NC              | General purpose input         | Not connected                     | PD0              |
-|  39 | NC              | General purpose input         | Not connected                     | PD1              |
-|  40 | DBG0            | General purpose output        | Pin used for debug purpose        | PD2              |
-|  41 | DBG1            | General purpose output        | Pin used for debug purpose        | PD3              |
-|  42 | HW_VERSION3     | General purpose input         | Hardware version (0 or 1)         | PB3              |
-|  43 | NC              | General purpose input         | Not connected                     | PB4              |
-|  44 | EXT_GPIO        | General purpose bidirectional | Module extension GPIO             | PB5              |
-|  45 | UART_TX         | UART1 line output             | UART1 data transmission           | PB6 / USART1_TX  |
-|  46 | UART_RX         | UART1 line input              | UART1 data reception              | PB7 / USART1_RX  |
-|  47 | I2C_SCL         | I2C1 master output            | I2C1 clock                        | PB8 / I2C1_SCL   |
-|  48 | I2C_SDA         | I2C1 master bidirectional     | I2C1 data line                    | PB9 / I2C1_SDA   |
+| Pin | Signal name     | Pin configuration             | Signal description                 | Pin affectation  |
+|-----|-----------------|-------------------------------|------------------------------------|------------------|
+|  1  | NC              | General purpose input         | Not connected                      | PC13             |
+|  2  | RTC_CLK_IN      | Clock source input            | Clock source for RTC               | PC14 / OSC32_IN  |
+|  3  | RTC_CLK_OUT     | Clock source output           | Clock source for RTC               | PC15 / OSC32_OUT |
+|  4  | 3.3V_POWER      |                               | MCU main power                     | VBAT             |
+|  5  | 3.3V_POWER      |                               | MCU main power                     | VREF+            |
+|  6  | 3.3V_POWER      |                               | MCU main power                     | VDD/VDDA         |
+|  7  | GND             |                               | MCU ground path                    | VSS/VSSA         |
+|  8  | NRF24L01_CE     | General purpose output        | NRF24L01 chip enable               | PF0              |
+|  9  | NRF24L01_IRQ    | General purpose input         | NRF24L01 interrupt line            | PF1              |
+|  10 | \RST            | Reset                         | MCU reset                          | NRST             |
+|  11 | EXT_INPUT1      | General purpose input         | Module external input              | PA0              |
+|  12 | EXT_INPUT2      | General purpose input         | Module external input              | PA1              |
+|  13 | EXT_INPUT3      | General purpose input         | Module external input              | PA2              |
+|  14 | EXT_INPUT4      | General purpose input         | Module external input              | PA3              |
+|  15 | DRIVE_CMD1_EN   | General purpose output        | External input drive enable        | PA4              |
+|  16 | DRIVE_CMD2_EN   | General purpose output        | External input drive enable        | PA5              |
+|  17 | DRIVE_CMD3_EN   | General purpose output        | External input drive enable        | PA6              |
+|  18 | DRIVE_CMD4_EN   | General purpose output        | External input drive enable        | PA7              |
+|  19 | HW_VERSION0     | General purpose input         | Hardware version (0 or 1)          | PB0              |
+|  20 | HW_VERSION1     | General purpose input         | Hardware version (0 or 1)          | PB1              |
+|  21 | HW_VERSION2     | General purpose input         | Hardware version (0 or 1)          | PB2              |
+|  22 | AD_12V          | Analog input                  | Monitor 12V power supply           | PB10 / ADC_IN11  |
+|  23 | LIGHT_SENSOR_EN | General purpose output        | Ligth sensor enable                | PB11             |
+|  24 | AD_LIGHT        | Analog input                  | Monitor light sensor               | PB12 / ADC_IN16  |
+|  25 | SPI_SCK         | SPI2 master output            | SPI master clock                   | PB13 / SPI2_SCK  |
+|  26 | SPI_MISO        | SPI2 master input             | SPI master data in                 | PB14 / SPI2_MISO |
+|  27 | SPI_MOSI        | SPI2 master output            | SPI master data out                | PB15 / SPI2_MOSI |
+|  28 | NRF24L01_CS     | SPI2 master output            | SPI master chip select             | PA8              |
+|  29 | 5V_EN           | General purpose output        | Enable communication power supply  | PA9              |
+|  30 | \MAX487_RE      | General purpose output        | Enable RS-485 driver reception     | PC6              |
+|  31 | MAX487_DE       | General purpose output        | Enable RS-485 driver transmission  | PC7              |
+|  32 | NC              | General purpose input         | Not connected                      | PA10             |
+|  33 | NC              | General purpose input         | Not connected                      | PA11             |
+|  34 | NC              | General purpose input         | Not connected                      | PA12             |
+|  35 | SWD_IO          | debug SWD bidirectional       | Serial wire debug data             | PA13 / SWDIO     |
+|  36 | SWD_CLK         | debug SWD input               | Serial wire debug clock            | PA14 / SWCLK     |
+|  37 | NC              | General purpose input         | Not connected                      | PA15             |
+|  38 | \RST            | General purpose output        | Temp & humidity sensor reset       | PD0              |
+|  39 | ADDR            | General purpose output        | Temp & humidity sensor I2C address | PD1              |
+|  40 | DBG0            | General purpose output        | Pin used for debug purpose         | PD2              |
+|  41 | DBG1            | General purpose output        | Pin used for debug purpose         | PD3              |
+|  42 | HW_VERSION3     | General purpose input         | Hardware version (0 or 1)          | PB3              |
+|  43 | NC              | General purpose input         | Not connected                      | PB4              |
+|  44 | EXT_GPIO        | General purpose bidirectional | Module extension GPIO              | PB5              |
+|  45 | UART_TX         | UART1 line output             | UART1 data transmission            | PB6 / USART1_TX  |
+|  46 | UART_RX         | UART1 line input              | UART1 data reception               | PB7 / USART1_RX  |
+|  47 | I2C_SCL         | I2C1 master output            | I2C1 clock                         | PB8 / I2C1_SCL   |
+|  48 | I2C_SDA         | I2C1 master bidirectional     | I2C1 data line                     | PB9 / I2C1_SDA   |
 
 
 #### Extensions submodule
