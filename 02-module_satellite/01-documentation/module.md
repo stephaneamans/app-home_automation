@@ -201,6 +201,19 @@ Interfaces :
 |  GND         | ground, power line     |
 
 
+#### LED submodule
+
+This function shall provide a visual indication for debug or any other topic.
+
+It is powered with the MCU voltage domain and controled through a MCU GPIO to be switched on and off by software.
+
+Interfaces :
+
+| Signal name  | Signal description         |
+|--------------|----------------------------|
+| LED          | LED signal                 |
+
+
 #### Power supply submodule
 
 This function shall convert a module input voltage to a safe and regulated voltage domain to power all components on the board.
@@ -215,6 +228,9 @@ The +3.3V is the digital MCU domain, it is powered directly from the +12V power 
 
 Each regulator is an LDO designed with all filtering needed.
 
+The 5V LDO regulator shall be enabled and disabled by the microcontroller.
+The 3_3V LDO regulator shall be controlled through a mechanism allowing the MCU to disable the LDO and to enable it again automatically.
+
 Interfaces :
 
 | Signal name  | Signal description         |
@@ -222,6 +238,8 @@ Interfaces :
 | +12V         | main external power supply |
 | +5V          | communication power supply |
 | +3.3V        | digital power supply       |
+| 3_3V_EN      | enable of the 3.3V LDO     |
+| 5V_EN        | enable of the 5V LDO       |
 
 
 #### Microcontroller submodule
@@ -263,12 +281,12 @@ Interfaces :
 |  29 | 5V_EN           | General purpose output        | Enable communication power supply  | PA9              |
 |  30 | \MAX487_RE      | General purpose output        | Enable RS-485 driver reception     | PC6              |
 |  31 | MAX487_DE       | General purpose output        | Enable RS-485 driver transmission  | PC7              |
-|  32 | NC              | General purpose input         | Not connected                      | PA10             |
+|  32 | LED             | General purpose output        | LED to provide visual informations | PA10             |
 |  33 | NC              | General purpose input         | Not connected                      | PA11             |
 |  34 | NC              | General purpose input         | Not connected                      | PA12             |
-|  35 | SWD_IO          | debug SWD bidirectional       | Serial wire debug data             | PA13 / SWDIO     |
-|  36 | SWD_CLK         | debug SWD input               | Serial wire debug clock            | PA14 / SWCLK     |
-|  37 | NC              | General purpose input         | Not connected                      | PA15             |
+|  35 | SWD_IO          | Debug SWD bidirectional       | Serial wire debug data             | PA13 / SWDIO     |
+|  36 | SWD_CLK         | Debug SWD input               | Serial wire debug clock            | PA14 / SWCLK     |
+|  37 | 3_3V_EN         | General purpose output        | Shut down 3.3V LDO                 | PA15             |
 |  38 | \RST            | General purpose output        | Temp & humidity sensor reset       | PD0              |
 |  39 | ADDR            | General purpose output        | Temp & humidity sensor I2C address | PD1              |
 |  40 | DBG0            | General purpose output        | Pin used for debug purpose         | PD2              |
