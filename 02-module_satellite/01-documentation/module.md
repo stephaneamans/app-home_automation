@@ -161,7 +161,6 @@ Where DRIVE_CMDx_EN are the polarisation stage enable command and EXT_INPUTx are
 This function shall be used to convert any external analog input voltages to a safe ADC range signal usable by the MCU.
 This can reflect any analog peripheral and it is used in the application to measure:
   - AD_12V : battry input level.
-  - AD_TEMP_CTN : temperature sensitive resistor value.
   - AD_LIGHT : light sensor. 
 
 For safety reason, the sensor will be powered with the MCU voltage (+3.3V) and measured on an ADC input.
@@ -171,9 +170,15 @@ Interfaces :
 | Signal name  | Signal description    |
 |--------------|-----------------------|
 | AD_12V       | analog input          |
-| AD_TEMP_CTN  | analog input          |
 | AD_LIGHT     | analog input          |
-        
+
+Especlally for the light sensor functionality, an enable mechanism shall be implemented to switch on and off the functionality (to save current consumption).
+The switch shall be controlled through an MCU output.
+
+| Signal name     | Signal description    |
+|-----------------|-----------------------|
+| LIGHT_SENSOR_EN | digital output        |
+
 
 #### Power supply submodule
 
@@ -228,7 +233,7 @@ Interfaces :
 |  20 | HW_VERSION1     | General purpose input         | Hardware version (0 or 1)         | PB1              |
 |  21 | HW_VERSION2     | General purpose input         | Hardware version (0 or 1)         | PB2              |
 |  22 | AD_12V          | Analog input                  | Monitor 12V power supply          | PB10 / ADC_IN11  |
-|  23 | AD_TEMP_CTN     | Analog input                  | Monitor analog temperature sensor | PB11 / ADC_IN15  |
+|  23 | LIGHT_SENSOR_EN | General purpose output        | Ligth sensor enable               | PB11             |
 |  24 | AD_LIGHT        | Analog input                  | Monitor light sensor              | PB12 / ADC_IN16  |
 |  25 | SPI_SCK         | SPI2 master output            | SPI master clock                  | PB13 / SPI2_SCK  |
 |  26 | SPI_MISO        | SPI2 master input             | SPI master data in                | PB14 / SPI2_MISO |
